@@ -17,6 +17,7 @@ app.use(cors(corsOptions));
 
 app.post('/register', (req, res) => {
     
+    console.log("Usao u /register");
     const obj = {
         username: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10),
@@ -36,13 +37,16 @@ app.post('/register', (req, res) => {
         console.log("Register: " + token);
 
         res.json({ token: token });
-    }).catch( err => res.status(500).json(err) );
+    })
+    .catch( err => res.status(500).json(err) );
 
 });
 
 app.post('/login', (req, res) => {
 
+    console.log("Usao u /login");
     console.log(req.body.username);
+
     User.findOne({ where: { username: req.body.username } })
         .then( user => {
 
