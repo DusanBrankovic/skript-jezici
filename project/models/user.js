@@ -9,20 +9,29 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Tournament }) {
-      this.belongsTo(Tournament, {foreignKey: 'tournamentId', as: 'tournament'});
+    static associate(models) {
+      // define association here
     }
   }
   User.init({
-    username: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-      validate: { len: [3,20] }
+      unique: true
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false
+    },
+    mod: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     },
     email: {
       type: DataTypes.STRING,
@@ -30,30 +39,9 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       validate: {
         isEmail: {
-          msg: "Email address is not valid!"
+          msg: "Nije email"
         }
       }
-    },
-    elo: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 1600
-    },
-    region: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      defaultValue: 'EU',
-      validate: { 
-        enumCheck(value){
-          if(value != 'EU' && value != 'NA' && value != 'SEA' && value != 'LATAM' && value != 'AUS' && value != 'AFR')
-            throw new Error('Only EU/NA/SEA/LATAM/AUS/AFR options allowed!');
-        }
-      }
-    },
-    banned: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false  
     }
   }, {
     sequelize,

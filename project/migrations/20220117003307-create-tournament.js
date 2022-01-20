@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tournamentName: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -23,7 +23,7 @@ module.exports = {
       },
       time: {
         type: Sequelize.INTEGER,
-        validate: { min: 0, max: 23 }
+        allowNull: false
       },
       eventId: {
         type: Sequelize.INTEGER,
@@ -31,7 +31,8 @@ module.exports = {
       },
       bracketId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: -1
       },
       createdAt: {
         allowNull: false,

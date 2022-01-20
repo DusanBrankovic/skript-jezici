@@ -4,7 +4,7 @@ function init(){
         e.preventDefault();
 
         const data = {
-            username: document.getElementById('username').value,
+            name: document.getElementById('name').value,
             password: document.getElementById('password').value
         };
 
@@ -19,7 +19,7 @@ function init(){
                 alert(el.msg);
             } else {
                 document.cookie = `token=${el.token};SameSite=Lax`;
-                window.location.href = 'welcome.html';
+                window.location.href = '/admin/';
             }
         });
     });

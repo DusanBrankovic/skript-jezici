@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      bracketName: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -18,12 +18,22 @@ module.exports = {
       },
       size: {
         type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      reserved: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        validate: { min: 0 }
+        defaultValue: 0
       },
       tournamentId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: -1
+      },
+      status: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
