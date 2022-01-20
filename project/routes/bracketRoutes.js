@@ -71,7 +71,7 @@ route.put('/:id', (req, res) => {
 
 route.delete('/:id', (req, res) => {
 
-    Brackets.findOne({ where: { id: req.params.id } })
+    Bracket.findOne({ where: { id: req.params.id } })
         .then( event => {
             event.destroy({ force: true })
                 .then( rows => res.json(rows) )

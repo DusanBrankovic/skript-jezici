@@ -1,6 +1,5 @@
 const { Event } = require('../models');
 const express = require('express');
-const bcrypt = require('bcrypt');
 const route = express.Router();
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));

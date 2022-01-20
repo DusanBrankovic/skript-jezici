@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { authSchema, registerSchema } = require('../joi/userSchema');
+const { registerSchema } = require('../joi/userSchema');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const route = express.Router();

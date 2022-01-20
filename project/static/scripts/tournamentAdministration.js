@@ -76,11 +76,23 @@ function deleteTournament(obj) {
     let id;
     id = obj.getAttribute('id');
 
-    // Pre deleta za event zovem njegove tournamente i prvo brisem njih
-
     fetch('http://127.0.0.1:8001/admin/tournaments/' + id, {
         method: 'DELETE'
     })
+
+    fetch('http://127.0.0.1:8001/admin/brackets/', {
+    })
+        .then(res => res.json())
+        .then(el => {
+
+            el.forEach(el => {
+                if(el.tournamentId == id){
+                    fetch('http://127.0.0.1:8001/admin/brackets/' + el.id, {
+                        method:'DELETE'
+                    })
+                }
+            });
+        })
 
     var table = document.getElementById('tournamentList');
     let i, row, colId;
