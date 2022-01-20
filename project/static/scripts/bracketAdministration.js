@@ -7,18 +7,14 @@ function init(){
             console.log("uso");
             const list = document.getElementById('bracketList');
 
-            list.innerHTML += `<tr><th> ID </th> <th> Name </th> <th> Type </th> <th> Size </th> <th> Reserved </th> <th> Status </th> <th> Action </th> </tr>`;
+            list.innerHTML += `<tr><th> ID </th> <th> Name </th> <th> Type </th> <th> Size </th> <th> Reserved </th> <th> Status </th> </tr>`;
             data.forEach( el => {
 
                 if(el.tournamentId == -1){
                     if(el.status == false){
-                        list.innerHTML += `<tr> <td> ${el.id} </td> <td> ${el.name} </td> <td> ${el.type} </td> <td> ${el.size}</td> <td> ${el.reserved} </td> <td> <button itemid="${el.id}" onclick="changeAvailable(this)" class="btn btn-success">available</button> </td> 
-                            <td> <a href="/admin/events/updateEvent/${el.id}" class="btn btn-success">Update</a>
-                            <button id="${el.id}" class="btn btn-danger" onclick="deleteEvent(this)">Delete</button> </td> </tr>`;
+                        list.innerHTML += `<tr> <td> ${el.id} </td> <td> ${el.name} </td> <td> ${el.type} </td> <td> ${el.size}</td> <td> ${el.reserved} </td> <td> <button itemid="${el.id}" onclick="changeAvailable(this)" class="btn btn-success">available</button> </td> `;
                     } else {
-                        list.innerHTML += `<tr> <td> ${el.id} </td> <td> ${el.name} </td> <td> ${el.type} </td> <td> ${el.size}</td> <td> ${el.reserved} </td> <td> <label itemid="${el.id}" style="color:red">unavailable</button> </td> 
-                            <td> <a href="/admin/events/updateEvent/${el.id}" class="btn btn-success">Update</a>
-                            <button id="${el.id}" class="btn btn-danger" onclick="deleteEvent(this)">Delete</button> </td> </tr>`;
+                        list.innerHTML += `<tr> <td> ${el.id} </td> <td> ${el.name} </td> <td> ${el.type} </td> <td> ${el.size}</td> <td> ${el.reserved} </td> <td> <label itemid="${el.id}" style="color:red">unavailable</button> </td> `;
                     }
                 }
             });
@@ -58,9 +54,7 @@ function init(){
                     return;
                 }
                 
-                document.getElementById('bracketList').innerHTML += `<tr> <td> ${data.id} </td> <td> ${data.name} </td> <td> ${data.type} </td> <td> ${data.size}</td> <td> ${data.reserved} </td> <td> <button itemid="${data.id}" onclick="changeAvailable(this)" class="btn btn-success">available</button> </td> 
-                <td> <a href="/admin/events/updateEvent/${data.id}" class="btn btn-success">Update</a>
-                <button id="${data.id}" class="btn btn-danger" onclick="deleteEvent(this)">Delete</button> </td> </tr>`;
+                document.getElementById('bracketList').innerHTML += `<tr> <td> ${data.id} </td> <td> ${data.name} </td> <td> ${data.type} </td> <td> ${data.size}</td> <td> ${data.reserved} </td> <td> <button itemid="${data.id}" onclick="changeAvailable(this)" class="btn btn-success">available</button> </td>`;
             
             })
     });
@@ -72,17 +66,6 @@ function changeAvailable(obj){
     let currTourId = urlParams[urlParams.length-2];
 
     let id = obj.getAttribute('itemid');
-
-    let list = document.getElementById('bracketList');
-    let i, row, colId;
-
-    for(i = 1, row ; row = list.rows[i] ; i++) {
-        colId = row.cells[0].innerText;
-
-        if(colId == id){
-            document.getElementsByTagName('tr')[i].remove();
-        }
-    }
 
     fetch('http://localhost:8001/admin/brackets/' + id, {
     })
@@ -129,10 +112,6 @@ function changeAvailable(obj){
                             })
                     })
                 })
-
-            list.innerHTML += `<tr> <td> ${el.id} </td> <td> ${el.name} </td> <td> ${el.type} </td> <td> ${el.size}</td> <td> ${el.reserved} </td> <td> <label itemid="${el.id}" style="color:red">unavailable</button> </td> 
-                        <td> <a href="/admin/events/updateEvent/${el.id}" class="btn btn-success">Update</a>
-                        <button id="${el.id}" class="btn btn-danger" onclick="deleteEvent(this)">Delete</button> </td> </tr>`;
         })
 
 }

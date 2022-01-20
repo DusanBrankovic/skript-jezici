@@ -78,6 +78,10 @@ app.get('/admin/events/:id/tournaments/:id/chooseBracket', (req, res) => {
     res.sendFile('bracketAdministration.html',  { root: './static/html' });
 });
 
+app.get('/admin/tournaments', (req, res) => {
+    res.sendFile('tournamentView.html',  { root: './static/html' });
+});
+
 app.get('/admin/brackets', (req, res) => {
     res.sendFile('bracketAdministration.html',  { root: './static/html' });
 });
