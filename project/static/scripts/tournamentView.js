@@ -25,7 +25,7 @@ function init(){
                                 if(el.bracketId != -1){
                                     list.innerHTML += `<tr> <td> ${el.id} </td> <td>${el.name} </td> <td> ${el.description} </td> <td> ${el.date}</td> <td> ${el.time} </td> <td>${event.name}</td> <td>${bracket.name} (${bracket.type})</td>`;
                                 } else {
-                                    list.innerHTML += `<tr> <td> ${el.id} </td> <td>${el.name} </td> <td> ${el.description} </td> <td> ${el.date}</td> <td> ${el.time} </td> <td>${event.name}</td> <td> <butto class="btn btn-warning">Not defined</a> </td>`;
+                                    list.innerHTML += `<tr> <td> ${el.id} </td> <td>${el.name} </td> <td> ${el.description} </td> <td> ${el.date}</td> <td> ${el.time} </td> <td>${event.name}</td> <td> <a href=/admin/events/${event.id}/tournaments/${el.id}/chooseBracket class="btn btn-warning">Choose</a> </td>`;
                                 }
                             })
 

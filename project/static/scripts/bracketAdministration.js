@@ -7,14 +7,16 @@ function init(){
             console.log("uso");
             const list = document.getElementById('bracketList');
 
-            list.innerHTML += `<tr><th> ID </th> <th> Name </th> <th> Type </th> <th> Size </th> <th> Reserved </th> <th> Status </th> </tr>`;
+            list.innerHTML += `<tr><th> ID </th> <th> Name </th> <th> Type </th> <th> Size </th> <th> Reserved </th> <th> Status </th> <th> Action </th> </tr>`;
             data.forEach( el => {
 
                 if(el.tournamentId == -1){
                     if(el.status == false){
-                        list.innerHTML += `<tr> <td> ${el.id} </td> <td> ${el.name} </td> <td> ${el.type} </td> <td> ${el.size}</td> <td> ${el.reserved} </td> <td> <button itemid="${el.id}" onclick="changeAvailable(this)" class="btn btn-success">available</button> </td> `;
+                        list.innerHTML += `<tr> <td> ${el.id} </td> <td> ${el.name} </td> <td> ${el.type} </td> <td> ${el.size}</td> <td> ${el.reserved} </td> <td> <button itemid="${el.id}" onclick="changeAvailable(this)" class="btn btn-success">available</button> </td> 
+                        <td> <button id="${el.id}" class="btn btn-danger" onclick="deleteBracket(this)">Delete</button> </td>`;
                     } else {
-                        list.innerHTML += `<tr> <td> ${el.id} </td> <td> ${el.name} </td> <td> ${el.type} </td> <td> ${el.size}</td> <td> ${el.reserved} </td> <td> <label itemid="${el.id}" style="color:red">unavailable</button> </td> `;
+                        list.innerHTML += `<tr> <td> ${el.id} </td> <td> ${el.name} </td> <td> ${el.type} </td> <td> ${el.size}</td> <td> ${el.reserved} </td> <td> <label itemid="${el.id}" style="color:red">unavailable</button> </td> 
+                        <td> <button id="${el.id}" class="btn btn-danger" onclick="deleteBracket(this)">Delete</button> </td>`;
                     }
                 }
             });
@@ -54,7 +56,8 @@ function init(){
                     return;
                 }
                 
-                document.getElementById('bracketList').innerHTML += `<tr> <td> ${data.id} </td> <td> ${data.name} </td> <td> ${data.type} </td> <td> ${data.size}</td> <td> ${data.reserved} </td> <td> <button itemid="${data.id}" onclick="changeAvailable(this)" class="btn btn-success">available</button> </td>`;
+                document.getElementById('bracketList').innerHTML += `<tr> <td> ${data.id} </td> <td> ${data.name} </td> <td> ${data.type} </td> <td> ${data.size}</td> <td> ${data.reserved} </td> <td> <button itemid="${data.id}" onclick="changeAvailable(this)" class="btn btn-success">available</button> </td>
+                <td> <button id="${data.id}" class="btn btn-danger" onclick="deleteBracket(this)">Delete</button> </td>`;
             
             })
     });
@@ -114,4 +117,38 @@ function changeAvailable(obj){
                 })
         })
 
+}
+
+function deleteBracket(obj) {
+
+    let id;
+    id = obj.getAttribute('id');
+
+    fetch('http://127.0.0.1:8001/admin/brackets/' + id, {
+        method: 'DELETE'
+    })
+
+    fetch('http://127.0.0.1:8001/admin/tournaments/', {
+    })
+        .then(res => res.json())
+        .then(el => {
+
+            el.forEach(el => {
+                if(el.bracketId == id){
+                    fetch('http://127.0.0.1:8001/admin/tournaments/' + el.id, {
+                        method:'DELETE'
+                    })
+                }
+            });
+        })
+
+    var table = document.getElementById('bracketList');
+    let i, row, colId;
+
+    for (i = 1, row; row = table.rows[i]; i++) {
+        colId = row.cells[0].innerText;
+        if(colId === id){
+            document.getElementsByTagName('tr')[i].remove();
+        }
+    }  
 }
